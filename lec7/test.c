@@ -160,6 +160,11 @@ int main() {
 
     sts_formatted_print_all(students_with_close_book, stdout);
     
+    // Not calling sts_destroy_all on subarray to avoid double-free of strings
+
+    free(students_with_close_book->students);
+    free(students_with_close_book);
+
     sts_destroy_all(&array);
     
     printf("Finished\n");

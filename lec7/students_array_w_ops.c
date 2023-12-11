@@ -165,6 +165,7 @@ static int st_interactive_get(FILE* istream, FILE* ostream, student* entry_got) 
         free(grade_book_num_str);
         return ST_INVALID_DATA;
     }
+    free(grade_book_num_str);
     fprintf(ostream, "Enter faculty:\n");
     char* faculty = NULL;
     size_t faculty_len = getline(&faculty, &buf_len, istream);
