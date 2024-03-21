@@ -162,6 +162,7 @@ int main(int argc, char** argv) {
         struct timespec end;
         for (size_t i = 0; i < queries_per_ttl; ++i) {
             while (true) {
+                errno = 0;
                 ssize_t bytes_sent = 
                     sendto(sockfd, icmp_echo_request, icmp_echo_request_len, 0, 
                             addr_found->ai_addr, addr_found->ai_addrlen);
@@ -195,6 +196,7 @@ int main(int argc, char** argv) {
 
             int poll_result = 0;
             while (true) {
+                errno = 0;
                 //Multiplexing a single fd for multiplexing - as you've asked
                 poll_result = poll(&socket_pollfd, 1, response_timeout);
                 if (interrupted) {
@@ -222,6 +224,7 @@ int main(int argc, char** argv) {
                     socklen_t addrlen = sizeof(src_addr);
                     ssize_t bytes_read = 0;
                     while (true) {
+                        errno = 0;
                         bytes_read = 
                             recvfrom(sockfd, response_buf, recv_buf_size, 0, 
                                 (struct sockaddr*)&src_addr, &addrlen);
@@ -273,7 +276,7 @@ int main(int argc, char** argv) {
             }
             increment_seq_number(icmp_echo_request, icmp_echo_request_len);
         }
-        print_report_for_ttl(stderr, ttl, response_srcs, timings_nsec, 
+        print_report_for_ttl(stdout, ttl, response_srcs, timings_nsec, 
                             queries_per_ttl);
         memset(timings_nsec, 0, queries_per_ttl * sizeof(*timings_nsec));
         memset(response_srcs, 0, queries_per_ttl * sizeof(*response_srcs));
