@@ -176,7 +176,7 @@ int main(int argc, char** argv) {
                     if (EINTR == errno) {
                         /**
                          * A signal arrived, but not one of those setting
-                         * interrupted = true or killing the proces - retrying.
+                         * interrupted = true or killing the process - retrying.
                         */
                        continue;
                     }
