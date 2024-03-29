@@ -1,6 +1,6 @@
 CC=gcc
 
-CFLAGS=-Wall -pedantic -g -fsanitize=address
+CFLAGS=-Wall -pedantic -g
 
 EXECUTABLE=my_traceroute
 CODE=*.c
