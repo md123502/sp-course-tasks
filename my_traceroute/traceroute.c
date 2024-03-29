@@ -181,10 +181,13 @@ int main(int argc, char** argv) {
                        continue;
                     }
                     //Socket is blocking, smth happened
-                    print_error_msg(stderr, SEND_ERROR);
-                    free_all_resources(addr_found, sockfd, icmp_echo_request, 
-                                        response_buf);
-                    return SEND_ERROR;
+                    if (0 != errno) {
+                        print_error_msg(stderr, SEND_ERROR);
+                        free_all_resources(addr_found, sockfd, icmp_echo_request, 
+                                            response_buf);
+                        return SEND_ERROR;
+                    }
+                    continue;
                 }
                 break;
             }
